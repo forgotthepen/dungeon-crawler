@@ -1,0 +1,20 @@
+# Build directories
+build/
+bin/
+
+# CMake cache and temp files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# VSCode and IDE configs
+.vscode/
+.idea/
+*.swp
+*.user
+*.workspace
+
+# OS files
+.DS_Store
+Thumbs.db

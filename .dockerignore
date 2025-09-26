@@ -1,0 +1,19 @@
+# Git metadata
+.git/
+.gitignore
+
+# Build artifacts
+build/
+bin/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# IDE configs
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
