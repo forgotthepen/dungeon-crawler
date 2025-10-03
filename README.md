@@ -1,5 +1,17 @@
 ## Build
 
+### Docker build
+
+#### X11
+```shell
+docker build -t dungeon-crawler:latest-x11 .
+```
+
+#### Wayland
+```shell
+docker build -t dungeon-crawler:latest-wayland --build-arg USE_WAYLAND=ON .
+```
+
 ### Native OS build
 
 #### Dependencies
@@ -36,28 +48,9 @@ cmake -B build -S . \
 cmake --build build -j -v
 ```
 
-### Docker build
-
-#### X11
-```shell
-docker build -t dungeon-crawler:latest-x11 .
-```
-
-#### Wayland
-```shell
-docker build -t dungeon-crawler:latest-wayland --build-arg USE_WAYLAND=ON .
-```
-
 ---
 
 ## Run
-
-### Native OS
-
-```shell
-chmod +x ./build/DungeonCrawler
-./build/DungeonCrawler
-```
 
 ### Docker
 
@@ -79,4 +72,11 @@ docker run --rm -it --security-opt label=type:container_runtime_t \
   -e "WAYLAND_DISPLAY=$WAYLAND_DISPLAY" \
   -v "/run/user/$(id -u)/$WAYLAND_DISPLAY:/run/user/$(id -u)/$WAYLAND_DISPLAY" \
   dungeon-crawler:latest-wayland
+```
+
+### Native OS
+
+```shell
+chmod +x ./build/DungeonCrawler
+./build/DungeonCrawler
 ```

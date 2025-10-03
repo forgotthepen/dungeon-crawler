@@ -3,8 +3,8 @@
 .gitignore
 
 # Build artifacts
-build/
-bin/
+build*/
+bin*/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
@@ -17,3 +17,7 @@ Makefile
 # OS junk
 .DS_Store
 Thumbs.db
+
+# others
+*.md
+LICENSE

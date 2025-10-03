@@ -16,22 +16,16 @@ RUN apt update && apt install -y \
   # X11
   libx11-dev libxrandr-dev libxi-dev \
   libgl1-mesa-dev  libglu1-mesa-dev \
-  libxcursor-dev libxinerama-dev \
-  # cleanup apt cache
-  && rm -rf /var/lib/apt/lists/*
+  libxcursor-dev libxinerama-dev
 RUN if [[ "$USE_SOUND" = "ON" ]]; then \
   apt update && apt install -y \
   # sound
   libasound2-dev \
-  # cleanup apt cache
-  && rm -rf /var/lib/apt/lists/* \
 ; fi
 RUN if [[ "$USE_WAYLAND" = "ON" ]]; then \
   apt update && apt install -y \
   # Wayland
   libwayland-dev libxkbcommon-dev wayland-protocols \
-  # cleanup apt cache
-  && rm -rf /var/lib/apt/lists/* \
 ; fi
 
 # Set workdir
