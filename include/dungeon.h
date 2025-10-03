@@ -5,7 +5,7 @@
 
 class Dungeon {
 public:
-    static constexpr int WALKABLE = 1;
+    static constexpr char WALKABLE = 1;
 
     Dungeon(int width, int height);
 
@@ -25,6 +25,6 @@ private:
     int width;
     int height;
     unsigned int currentSeed;
-    std::vector<std::vector<int>> map{};
+    std::vector<std::vector<char>> map{};
     Vector2 spawn{};
 };

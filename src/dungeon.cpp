@@ -38,30 +38,36 @@ void Dungeon::generate(unsigned int seed) {
     }
 
     // reset map
-    map.assign(height, std::vector<int>(width, 0));
+    map.assign(height, std::vector<char>(width, 0));
 
     const int numRooms = 8;
     const float screenDistance = std::sqrt((float)width * width + (float)height * height);
     const int roomDistance = (int)(screenDistance / numRooms);
     
     // absolute parmeter
-    std::uniform_int_distribution<int> roomW(roomDistance / 2, roomDistance);
-    std::uniform_int_distribution<int> roomH(roomDistance / 2, roomDistance);
+    std::uniform_int_distribution<int> distribRoomW(roomDistance / 2, roomDistance);
+    std::uniform_int_distribution<int> distribRoomH(roomDistance / 2, roomDistance);
     // absolute position
-    std::uniform_int_distribution<int> absPosX(1, width - roomDistance - 1);
-    std::uniform_int_distribution<int> absPosY(1, height - roomDistance - 1);
+    std::uniform_int_distribution<int> distribAbsPosX(1, width - roomDistance - 1);
+    std::uniform_int_distribution<int> distribAbsPosY(1, height - roomDistance - 1);
 
     std::mt19937 rng(currentSeed);
 
-    struct Room { int absPosX, absPosY, width, height; };
+    struct Room {
+        int absPosX; // pos X on grid
+        int absPosY; // pos Y on grid
+        int width;   // width in pixels (points)
+        int height;  // height in pixels (points)
+    };
+
     std::optional<Room> lastRoom;
 
     for (int idx = 0; idx < numRooms; idx++) {
         Room newRoom;
-        newRoom.width = roomW(rng);
-        newRoom.height = roomH(rng);
-        newRoom.absPosX = absPosX(rng);
-        newRoom.absPosY = absPosY(rng);
+        newRoom.absPosX = distribAbsPosX(rng);
+        newRoom.absPosY = distribAbsPosY(rng);
+        newRoom.width = distribRoomW(rng);
+        newRoom.height = distribRoomH(rng);
 
         // carve room
         for (int yyy = newRoom.absPosY; yyy < newRoom.absPosY + newRoom.height && yyy < height - 1; yyy++) {
@@ -72,6 +78,7 @@ void Dungeon::generate(unsigned int seed) {
 
         if (lastRoom) {
             // connect with corridor to previous room
+            // start from the middle of the last room to the middle of the current room
             int corridorStartX = lastRoom.value().absPosX + lastRoom.value().width / 2;
             const int corridorEndX = newRoom.absPosX + newRoom.width / 2;
             const int incX = corridorStartX <= corridorEndX ? 1 : -1;
@@ -80,6 +87,7 @@ void Dungeon::generate(unsigned int seed) {
             const int corridorEndY = newRoom.absPosY + newRoom.height / 2;
             const int incY = corridorStartY <= corridorEndY ? 1 : -1;
 
+            // carve corridor
             while (corridorStartX != corridorEndX) {
                 map[corridorStartY][corridorStartX] = WALKABLE;
                 corridorStartX += incX;
