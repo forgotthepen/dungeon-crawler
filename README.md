@@ -1,3 +1,7 @@
+## A text-based dungeon crawler game
+
+![game screen](./assets/game.png)
+
 ## Build
 
 ### Docker build
